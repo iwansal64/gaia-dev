@@ -2,7 +2,8 @@
 #include <Arduino.h>
 #include <MQTTManager.h>
 #include <SensorManager.h>
-#include <WiFi.h>
+#include <WiFiManager.h>
+#include <WebConfig.h>
 #include <env.h>
 
 
@@ -29,22 +30,21 @@ void setup() {
   
   
   //? Setup WiFi
-  WiFi.begin(ENV_SSID, ENV_PASS);
-  Serial.println("Connecting");
-  while(!WiFi.isConnected()) {
-    Serial.print(" .");
-    delay(1000);
-  }
-  Serial.print("\nConnected!\n");
+  WiFiManager::initialize();
 
   
   //? Setup MQTT
-  MQTTManager::init("192.168.137.1", callback);
+  MQTTManager::init("gaia-odc.digital", callback);
   MQTTManager::listen("PwlDq");
+
+
+  //? Setup WebConfig
+  WebConfig::initialize();
 }
 
 void loop() {
   MQTTManager::loop();
+  WebConfig::serve_clients();
 
   uint64_t current_time = millis();
   if(current_time - last_data_update > (60 / DATA_TRANSFER_RATE_PER_MINUTE) * 1000) {

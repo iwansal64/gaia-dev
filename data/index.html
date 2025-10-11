@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAIA Web Config</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: calibri, sans-serif;
+    }
+
+    html {
+      font-size: 18px;
+    }
+    
+    .container {
+      flex-direction: row;
+      width: 90vw;
+      max-width: 1280px;
+      aspect-ratio: 2/1;
+    }
+    
+    @media (max-width: 800px) {
+      html {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      html {
+        font-size: 12px;
+      }
+
+      .container {
+        flex-direction: column;
+        width: 95vw;
+        max-width: 1280px;
+        aspect-ratio: 4/3;
+      }
+    }
+    
+    body {
+      background-color: #ccc;
+    }
+
+    input {
+      text-align: center;
+      padding: 5px 5px;
+      outline: none;
+      border: none;
+      background-color: transparent;
+      border-bottom: 1px solid black;
+      font-size: 16px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" style="border: 1px solid black; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; background-color: #f5f5f5;">
+    <div style="height: 100%; width: 100%; display: flex; flex-direction: column; padding: 25px; box-sizing: border-box; position: relative;">
+      <h1 style="font-size: 0.85rem; font-weight: 600; text-align: center; width: 100%;">GAIA</h1>
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%;">
+        <h1 style="font-weight: 200; text-align: center; width: 100%; font-size: 1.35rem;">Welcome, User!</h1>
+        <p style="font-weight: 200; text-align: center; width: 100%; font-size: 1rem;">Please, input the <i>device key</i> for this device to configure.</p>
+        <div style="display: flex; justify-content: center; margin-top: 15px;">
+          <input type="password" placeholder="device key" id="device-key">
+        </div>
+      </div>
+      <button style="background-color: #5f0; font-size: 1rem; font-weight: 100; position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); padding: 10px 30px; margin-top: 15px; width: fit-content; border: 1px solid black; border-radius: 25px; cursor: pointer;" onclick="window.location.href = '/configure/wifi?device-key='+document.getElementById('device-key').value;">Configure!</button>
+    </div>
+    <div style="height: 100%; width: 100%; background-color: #2e0; position: relative;">
+      <div style="width: max-content; position: absolute; padding: 25px; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+        <h1 style="width: 100%; text-align: center; font-weight: 200; font-size: 1.5rem;">How to get the device key?</h1>
+        <p style="width: 100%; text-align: center; font-weight: 200; font-size: 1rem;">See the device key below the device.</p>
+      </di>
+    </div>
+  </div>
+</body>
+</html>
