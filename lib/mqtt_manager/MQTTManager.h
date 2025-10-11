@@ -1,12 +1,19 @@
 #pragma once
 
 #include <Arduino.h>
-#include <PubSubClient.h>
 #include <vector>
+#include <ArduinoWebsockets.h>
+
+using namespace websockets;
+
 
 class MQTTManager {
+private:
+  static String url;
+  static bool is_initialized;
+  
 public:
-  static PubSubClient client;
+  static bool is_connected;
   static std::vector<String> listened_topics;
 
   /**
@@ -14,7 +21,7 @@ public:
    * @param url a valid URL that points to MQTT broker
    * 
    */
-  static void init(const char* url, void (*callback)(char*, byte*, unsigned int));
+  static void init(const char* url, void (*callback)(WebsocketsMessage msg));
 
 
   /**
@@ -22,9 +29,8 @@ public:
    * @param topic the topic where the data should sent into
    * @param data the data that should be sent to the choosen topic
    * 
-   * @return Whether the send attempt success or not
    */
-  static bool send(const char* topic, const char* data);
+  static void send(const char* topic, const char* data);
 
 
   /**
@@ -33,10 +39,10 @@ public:
    */
   static void loop();
 
-
+  
   /**
-   * @brief Add topic to the list of listened topics
+   * @brief send connect request to the MQTT broker
    * 
    */
-  static void listen(const char* topic);
+  static void send_mqtt_connect();
 };

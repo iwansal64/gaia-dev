@@ -17,7 +17,7 @@ uint64_t last_data_update = 0UL;
 
 
 //? Function Definitions
-void callback(char* topic, byte* payload, unsigned int length);
+void callback(WebsocketsMessage message);
 
 
 void setup() {
@@ -34,8 +34,7 @@ void setup() {
 
   
   //? Setup MQTT
-  MQTTManager::init("gaia-odc.digital", callback);
-  MQTTManager::listen("PwlDq");
+  MQTTManager::init("mqttws.gaia-odc.digital", callback);
 
 
   //? Setup WebConfig
@@ -47,8 +46,7 @@ void loop() {
   WebConfig::serve_clients();
 
   uint64_t current_time = millis();
-  if(current_time - last_data_update > (60 / DATA_TRANSFER_RATE_PER_MINUTE) * 1000) {
-    
+  if(WiFiManager::is_connected() && MQTTManager::is_connected && current_time - last_data_update > (60 / DATA_TRANSFER_RATE_PER_MINUTE) * 1000) {    
     float ec = SensorManager::get_ec();
     float ph = SensorManager::get_ph();
     uint32_t tds = SensorManager::get_tds();
@@ -71,12 +69,8 @@ void loop() {
 }
 
 
-void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] <");
-  for (unsigned int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
-  }
-  Serial.println(">");
+void callback(WebsocketsMessage message) {
+  Serial.print("Message arrived: [");
+  Serial.print(message.c_str());
+  Serial.println("]");
 }

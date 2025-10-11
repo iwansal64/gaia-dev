@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "*.cs": "csharp",
+    "*.html": "html",
+    "unordered_map": "cpp",
+    "fstream": "cpp",
+    "istream": "cpp",
+    "ostream": "cpp",
+    "sstream": "cpp",
+    "system_error": "cpp"
+  }
+}
