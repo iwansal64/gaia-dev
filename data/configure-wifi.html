@@ -19,32 +19,36 @@
     <div class="nav-list">
       <a class="active" href="#">WiFi</a>
       <a href="../access-point">Access Point</a>
-      <a href="../connection">Connection</a>
+      <a href="../security">Security</a>
     </div>
   </nav>
 
   <div class="container">
 
     <div class="form">
+      <div class="form-header">
+        <h1 class="form-title">WiFi Configuration</h1>
+        <p class="form-subtitle">Configuring WiFi that ESP32 can use to connect to the internet</p>
+      </div>
       <div class="fields-container">
         <div class="field">
           <div>
-            <p class="field-title">New SSID</p>
+            <p class="field-title">SSID</p>
             <p class="field-subtitle">The WiFi names that ESP32 can connect to</p>
           </div>
           <input type="text" placeholder="Type new SSID here" id="ssid">
         </div>
         <div class="field">
           <div>
-            <p class="field-title">New Password</p>
+            <p class="field-title">Password</p>
             <p class="field-subtitle">The WiFi password that ESP32 can connect to</p>
           </div>
           <input type="password" placeholder="New Password" id="pass">
         </div>
       </div>
 
-      <button class="save-btn" onclick="window.location.href=`./?ssid=${document.getElementById('ssid').value}&pass=${document.getElementById('pass').value}`">Save</button>
-    </div>
+      <button class="save-btn" onclick="window.location.href=`/configure/wifi?ssid=${document.getElementById('ssid').value}&pass=${document.getElementById('pass').value}`">Save</button>
+    </di>
 
   </div>
 </body>

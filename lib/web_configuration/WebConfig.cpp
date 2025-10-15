@@ -1,6 +1,6 @@
 #include <WebConfig.h>
-#include <WiFi.h>
 #include <ESPmDNS.h>
+#include <LocalStorage.h>
 
 bool WebConfig::isInitialized = false;
 WebServer *WebConfig::server = nullptr;
@@ -27,12 +27,32 @@ void WebConfig::initialize() {
 
   // Start the server
   WebConfig::server->begin();
-  Serial.println("Server started");
+  Serial.println("[WebConfig] Server started");
   
   WebConfig::isInitialized = true;
 }
 
 void WebConfig::serve_web(uint8_t endpoint_code) {
+  // Check if there's WiFi configuration
+  if(endpoint_code == 1) {
+    // If there's SSID and password as the arguments
+    if(WebConfig::server->hasArg("ssid") && WebConfig::server->hasArg("pass")) {
+      // Get the SSID and password value
+      String ssid = WebConfig::server->arg("ssid");
+      String pass = WebConfig::server->arg("pass");
+
+      Serial.println();
+      Serial.println("[WebConfig] +----- NEW CONFIG ----->");
+      Serial.println("[WebConfig] |--> SSID:       " + ssid);
+      Serial.println("[WebConfig] |--> Password:   " + pass);
+      Serial.println("[WebConfig] +---------------------->");
+      Serial.println();
+
+      // Save the wifi creds
+      LocalStorage::save_wifi_creds(ssid, pass);
+    }
+  }
+  
   // Create a variable to hold the file data
   File file;
   String type = "text/html";
