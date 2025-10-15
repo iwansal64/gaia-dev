@@ -5,6 +5,8 @@
 
 class WiFiManager {
 public:
+  static String ssid;
+  static String pass;
   static bool isInitialized;
   static bool isConnected;
 

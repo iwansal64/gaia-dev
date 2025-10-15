@@ -2,15 +2,15 @@
 
 #include <Arduino.h>
 #include <vector>
-#include <ArduinoWebsockets.h>
 
-using namespace websockets;
 
 
 class MQTTManager {
 private:
   static String url;
+  static uint16_t port;
   static bool is_initialized;
+  static uint64_t last_time_reconnecting;
   
 public:
   static bool is_connected;
@@ -21,7 +21,7 @@ public:
    * @param url a valid URL that points to MQTT broker
    * 
    */
-  static void init(const char* url, void (*callback)(WebsocketsMessage msg));
+  static void init(const char* url);
 
 
   /**
@@ -30,7 +30,7 @@ public:
    * @param data the data that should be sent to the choosen topic
    * 
    */
-  static void send(const char* topic, const char* data);
+  static bool send(const char* topic, const char* data);
 
 
   /**
@@ -38,11 +38,4 @@ public:
    * 
    */
   static void loop();
-
-  
-  /**
-   * @brief send connect request to the MQTT broker
-   * 
-   */
-  static void send_mqtt_connect();
 };

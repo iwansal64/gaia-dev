@@ -17,7 +17,7 @@ uint64_t last_data_update = 0UL;
 
 
 //? Function Definitions
-void callback(WebsocketsMessage message);
+void callback(String message);
 
 
 void setup() {
@@ -34,7 +34,7 @@ void setup() {
 
   
   //? Setup MQTT
-  MQTTManager::init("mqttws.gaia-odc.digital", callback);
+  MQTTManager::init("wss://mqttws.gaia-odc.digital:443");
 
 
   //? Setup WebConfig
@@ -52,24 +52,26 @@ void loop() {
     uint32_t tds = SensorManager::get_tds();
     float temp = SensorManager::get_temp();
 
-    String data = "ec=" + String(ec) + ";" +
-                  "ph=" + String(ph) + ";" +
-                  "tds=" + String(tds) + ";" +
-                  "tempC=" + String(temp) + "";
-    
-
     Serial.println("Sending Data...");
     
-    MQTTManager::send("PwlDq", data.c_str());
+    bool result = MQTTManager::send("PwlDq/ec", String(ec).c_str());
+    result = MQTTManager::send("PwlDq/ph", String(ph).c_str()) && result;
+    result = MQTTManager::send("PwlDq/tds", String(tds).c_str()) && result;
+    result = MQTTManager::send("PwlDq/tempC", String(temp).c_str()) && result;
 
-    Serial.println("Data Sent!");
+    if(result) {
+      Serial.println("Data Successfully Sent! :)");
+    }
+    else {
+      Serial.println("Data Failed Sent! :(");
+    }
 
     last_data_update = current_time;
   }
 }
 
 
-void callback(WebsocketsMessage message) {
+void callback(String message) {
   Serial.print("Message arrived: [");
   Serial.print(message.c_str());
   Serial.println("]");

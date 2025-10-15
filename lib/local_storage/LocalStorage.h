@@ -40,5 +40,13 @@ public:
    * @param pass_container is a variable that will contains the WiFi password
    * 
    */
-  static void get_wifi_creds(String &ssid_container, String &pass_container);
+  static void load_wifi_creds(String &ssid_container, String &pass_container);
+
+  /**
+   * @brief Set WiFi credentials to the local storage
+   * @param new_ssid is a variable that contains the value of new WiFi SSID
+   * @param new_pass is a variable that contains the value of new WiFi password
+   * 
+   */
+  static void save_wifi_creds(String new_ssid, String new_pass);
 };
