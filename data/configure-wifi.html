@@ -18,8 +18,7 @@
     <div class="nav-bg" onclick="document.getElementById('navbar').classList.toggle('active')"></div>
     <div class="nav-list">
       <a class="active" href="#">WiFi</a>
-      <a href="../access-point">Access Point</a>
-      <a href="../security">Security</a>
+      <a href="/configure/security">Security</a>
     </div>
   </nav>
 
@@ -48,8 +47,9 @@
       </div>
 
       <button class="save-btn" onclick="window.location.href=`/configure/wifi?ssid=${document.getElementById('ssid').value}&pass=${document.getElementById('pass').value}`">Save</button>
-    </di>
+    </div>
 
+    <script src="/status-notifier.js"></script>
   </div>
 </body>
 </html>

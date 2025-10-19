@@ -24,7 +24,7 @@ void WiFiManager::initialize() {
   
   // Set the WiFi mode
   WiFi.mode(WIFI_AP_STA);
-  
+  delay(100);
   
   // Get the SSID and password
   LocalStorage::load_wifi_creds(WiFiManager::ssid, WiFiManager::pass);
@@ -59,4 +59,13 @@ bool WiFiManager::is_connected() {
   WiFiManager::isConnected = connected;
   
   return WiFiManager::isConnected;
+}
+
+void WiFiManager::reconnect(String ssid, String pass) {
+  WiFi.disconnect();
+  WiFi.begin(ssid, pass);
+}
+
+void WiFiManager::loop() {
+  WiFiManager::is_connected();
 }

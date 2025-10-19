@@ -7,6 +7,7 @@
 class WebConfig {
 public:
   static WebServer* server;
+  static String last_message;
   static bool isInitialized;
   
   /**

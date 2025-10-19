@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAIA Web Config</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button class="toggle-nav" onclick="document.getElementById('navbar').classList.toggle('active')">
+    <div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </button>
+  <nav id="navbar">
+    <div class="nav-bg" onclick="document.getElementById('navbar').classList.toggle('active')"></div>
+    <div class="nav-list">
+      <a href="/configure/wifi">WiFi</a>
+      <a class="active" href="#">Security</a>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="form">
+      <div class="form-header">
+        <h1 class="form-title">Security Configuration</h1>
+        <p class="form-subtitle">Secruity Features that user can configure for the device</p>
+      </div>
+      <div class="fields-container">
+        <div class="field">
+          <div>
+            <p class="field-title">User ID</p>
+            <p class="field-subtitle">The ID of user that allowed to get the device data</p>
+          </div>
+          <input type="text" placeholder="Type new User ID here" id="user_id">
+        </div>
+        <div class="field">
+          <div>
+            <p class="field-title">WiFi Config SSID</p>
+            <p class="field-subtitle">The WiFi name of this GAIA device that user can connect to configure</p>
+          </div>
+          <input type="password" placeholder="New SSID" id="pass">
+        </div>
+        <div class="field">
+          <div>
+            <p class="field-title">WiFi Config PASS</p>
+            <p class="field-subtitle">The WiFi password of this GAIA device that user can connect to configure</p>
+          </div>
+          <input type="password" placeholder="New Password" id="pass">
+        </div>
+      </div>
+
+      <button class="save-btn" onclick="onSave()">Save</button>
+    </div>
+
+  </div>
+
+  <script src="/status-notifier.js"></script>
+  <script>
+    function onSave() {
+      console.log("TEST");
+      const user_id = document.getElementById('user_id').value;
+      if(user_id) {
+        window.location.href=`/configure/security?user_id=${user_id}`
+      }
+      else {
+        alert("No changes made");
+      }
+    }
+  </script>
+</body>
+</html>

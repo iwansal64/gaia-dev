@@ -22,4 +22,16 @@ public:
    * 
    */
   static bool is_connected();
+
+  /**
+   * @brief Reconnect WiFi with new WiFi credentials
+   * 
+   */
+  static void reconnect(String ssid, String pass);
+
+  /**
+   * @brief Run the function on the loop
+   * 
+   */
+  static void loop();
 };

@@ -9,7 +9,7 @@
 
 
 //? Definitions
-#define DATA_TRANSFER_RATE_PER_MINUTE 30 // 1 data per 2 seconds
+#define DATA_TRANSFER_RATE_PER_MINUTE 1 // 1 data per 2 seconds
 
 
 //? Variables
@@ -44,6 +44,7 @@ void setup() {
 void loop() {
   MQTTManager::loop();
   WebConfig::serve_clients();
+  WiFiManager::loop();
 
   uint64_t current_time = millis();
   if(WiFiManager::is_connected() && MQTTManager::is_connected && current_time - last_data_update > (60 / DATA_TRANSFER_RATE_PER_MINUTE) * 1000) {    
