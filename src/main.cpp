@@ -4,6 +4,7 @@
 #include <SensorManager.h>
 #include <WiFiManager.h>
 #include <WebConfig.h>
+#include <ServoManager.h>
 #include <env.h>
 
 
@@ -14,10 +15,6 @@
 
 //? Variables
 uint64_t last_data_update = 0UL;
-
-
-//? Function Definitions
-void callback(String message);
 
 
 void setup() {
@@ -39,12 +36,17 @@ void setup() {
 
   //? Setup WebConfig
   WebConfig::initialize();
+
+
+  //? Setup Servo
+  ServoManager::init();
 }
 
 void loop() {
   MQTTManager::loop();
   WebConfig::serve_clients();
   WiFiManager::loop();
+  ServoManager::loop();
 
   uint64_t current_time = millis();
   if(WiFiManager::is_connected() && MQTTManager::is_connected && current_time - last_data_update > (60 / DATA_TRANSFER_RATE_PER_MINUTE) * 1000) {    
@@ -71,9 +73,3 @@ void loop() {
   }
 }
 
-
-void callback(String message) {
-  Serial.print("Message arrived: [");
-  Serial.print(message.c_str());
-  Serial.println("]");
-}

@@ -3,6 +3,7 @@
 #include <PsychicMqttClient.h>
 #include <env.h>
 #include <WiFiManager.h>
+#include <ServoManager.h>
 
 
 extern const uint8_t mqtt_root_ca_pem_start[] asm("_binary_src_certs_mqtt_root_ca_pem_start");
@@ -31,9 +32,10 @@ uint64_t MQTTManager::last_time_reconnecting = 0;
 
 //? Functions Helper
 
-void on_mqtt_message(const char *topic, const char *payload, int retain, int qos, bool dup) {
+void on_fish(const char *topic, const char *payload, int retain, int qos, bool dup) {
   Serial.printf("[MQTT] Received Topic: %s\r\n", topic);
   Serial.printf("[MQTT] Received Payload: %s\r\n", payload); 
+  ServoManager::trigger();
 }
 
 void on_mqtt_connect(bool sessionPresent) {
@@ -88,7 +90,7 @@ void MQTTManager::init(const char* url) {
 
   // Subscribe to particular MQTT topic
   String topic = String(ENV_DEVICE_ID) + "/fish";
-  mqtt_client.onTopic(topic.c_str(), 0, on_mqtt_message);
+  mqtt_client.onTopic(topic.c_str(), 0, on_fish);
 
   // Set MQTT auto reconnect interval
   mqtt_client.setAutoReconnect(TIME_BEFORE_RECONNECT);
