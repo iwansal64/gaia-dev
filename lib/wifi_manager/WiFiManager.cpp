@@ -12,7 +12,6 @@ String WiFiManager::ssid = "";
 String WiFiManager::pass = "";
 
 
-
 //? Function Definitions
 
 void WiFiManager::initialize() {

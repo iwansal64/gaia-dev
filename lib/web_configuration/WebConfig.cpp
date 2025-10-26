@@ -3,10 +3,16 @@
 #include <LocalStorage.h>
 #include <APIManager.h>
 #include <WiFiManager.h>
+#include <HTTPUpdateServer.h>
+
 
 bool WebConfig::isInitialized = false;
 WebServer *WebConfig::server = nullptr;
 String WebConfig::last_message = "";
+
+WebServer sync_server(8080);
+HTTPUpdateServer http_ota_updater;
+uint64_t last_ota_progress_update = 0UL;
 
 void WebConfig::initialize() {
   if(WebConfig::isInitialized) return;
@@ -16,12 +22,19 @@ void WebConfig::initialize() {
 
   // Initialize SPIFFS
   if (!SPIFFS.begin(true)) {
-    Serial.println("An Error has occurred while mounting SPIFFS");
+    Serial.println("[SPIFFS] An Error has occurred while mounting SPIFFS");
     return;
   }
   
   // Setup server mDNS
   MDNS.begin("gaia-dev");
+  
+  // Setup OTA server
+  http_ota_updater.setup(&sync_server);
+  Serial.print("[OTA] Async OTA started!\n");
+
+  sync_server.begin();
+  Serial.print("[OTA] Web servers started!\n");
   
   // Setup server endpoints
   WebConfig::server->on("/", ([](){ WebConfig::serve_web(0); }));
