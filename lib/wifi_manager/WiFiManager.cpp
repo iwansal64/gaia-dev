@@ -6,8 +6,8 @@
 
 //? Variable Definitions
 
-bool WiFiManager::isInitialized = false;
-bool WiFiManager::isConnected = false;
+bool WiFiManager::is_initialized = false;
+bool WiFiManager::is_connected = false;
 String WiFiManager::ssid = "";
 String WiFiManager::pass = "";
 
@@ -16,7 +16,7 @@ String WiFiManager::pass = "";
 //? Function Definitions
 
 void WiFiManager::initialize() {
-  if(WiFiManager::isInitialized) return;
+  if(WiFiManager::is_initialized) return;
   
   
   // Set Host Name
@@ -44,21 +44,21 @@ void WiFiManager::initialize() {
   
 
   // Set to initialized
-  WiFiManager::isInitialized = true;
+  WiFiManager::is_initialized = true;
 }
 
-bool WiFiManager::is_connected() {
+bool WiFiManager::check_connected() {
   bool connected = WiFi.isConnected();
-  if(!WiFiManager::isConnected && connected) {
+  if(!WiFiManager::is_connected && connected) {
     Serial.println("[WiFi] Conencted!");
   }
-  else if(WiFiManager::isConnected && !connected) {
+  else if(WiFiManager::is_connected && !connected) {
     Serial.println("[WiFi] Disconnected!");
   }
 
-  WiFiManager::isConnected = connected;
+  WiFiManager::is_connected = connected;
   
-  return WiFiManager::isConnected;
+  return WiFiManager::is_connected;
 }
 
 void WiFiManager::reconnect(String ssid, String pass) {
@@ -67,5 +67,5 @@ void WiFiManager::reconnect(String ssid, String pass) {
 }
 
 void WiFiManager::loop() {
-  WiFiManager::is_connected();
+  WiFiManager::check_connected();
 }

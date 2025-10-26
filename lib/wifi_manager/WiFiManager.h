@@ -7,8 +7,8 @@ class WiFiManager {
 public:
   static String ssid;
   static String pass;
-  static bool isInitialized;
-  static bool isConnected;
+  static bool is_initialized;
+  static bool is_connected;
 
   /**
    * @brief Initialize WiFi connection
@@ -21,7 +21,7 @@ public:
    * @brief Check if connected to the WiFi or not
    * 
    */
-  static bool is_connected();
+  static bool check_connected();
 
   /**
    * @brief Reconnect WiFi with new WiFi credentials
