@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <SensorManager.h>
 #include <TDSSensor.h>
+#include <PHSensor.h>
 
 void SensorManager::init() {
   // Setup Pins and other things here
@@ -16,7 +17,7 @@ float SensorManager::get_ec() {
 
 float SensorManager::get_ph() {
   // Get the pH value
-  float ph_value = random(200, 700) / 100.0f; // random from 2 - 7 with 2 decimal precision
+  float ph_value = PHSensor::get_ph(); // random from 2 - 7 with 2 decimal precision
 
   return ph_value;
 }
@@ -37,4 +38,5 @@ float SensorManager::get_temp() {
 
 void SensorManager::loop() {
   TDSSensor::loop();
+  PHSensor::loop();
 }
