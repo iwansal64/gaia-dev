@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <SensorManager.h>
+#include <TDSSensor.h>
 
 void SensorManager::init() {
   // Setup Pins and other things here
@@ -22,7 +23,7 @@ float SensorManager::get_ph() {
 
 uint32_t SensorManager::get_tds() {
   // Get the TDS
-  float tds_value = random(300, 800); // random from 300 - 800
+  float tds_value = TDSSensor::get_tds(); // random from 300 - 800
 
   return tds_value;
 }
@@ -32,4 +33,8 @@ float SensorManager::get_temp() {
   float temp_value = random(100, 300) / 10.0f; // random from 10 - 30 with 1 decimal precision
 
   return temp_value;
+}
+
+void SensorManager::loop() {
+  TDSSensor::loop();
 }

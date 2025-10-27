@@ -34,4 +34,10 @@ public:
    * 
    */
   static float get_ec();
+
+  /**
+   * @brief Runs loop program
+   * 
+   */
+  static void loop();
 };
